@@ -1,0 +1,78 @@
+import java.util.Scanner;
+
+public class GradeCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input the number of subjects with error handling
+        int numSubjects = 0;
+        while (numSubjects <= 0) {
+            try {
+                System.out.print("Enter the number of subjects: ");
+                numSubjects = scanner.nextInt();
+
+                if (numSubjects <= 0) {
+                    System.out.println("Please enter a valid number of subjects (greater than 0).");
+                }
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                scanner.nextLine(); // Clear the input buffer
+            }
+        }
+
+        // Array to store marks for each subject
+        int[] marks = new int[numSubjects];
+
+        // Input marks for each subject with error handling
+        for (int i = 0; i < numSubjects; i++) {
+            boolean validInput = false;
+
+            while (!validInput) {
+                try {
+                    System.out.print("Enter marks for Subject " + (i + 1) + ": ");
+                    marks[i] = scanner.nextInt();
+
+                    if (marks[i] < 0 || marks[i] > 100) {
+                        System.out.println("Please enter valid marks (between 0 and 100).");
+                    } else {
+                        validInput = true;
+                    }
+                } catch (java.util.InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter a valid integer.");
+                    scanner.nextLine(); // Clear the input buffer
+                }
+            }
+        }
+
+        // Calculate total marks
+        int totalMarks = 0;
+        for (int mark : marks) {
+            totalMarks += mark;
+        }
+
+        // Calculate average percentage
+        double averagePercentage = (double) totalMarks / numSubjects;
+
+        // Grade calculation
+        char grade;
+        if (averagePercentage >= 90) {
+            grade = 'A';
+        } else if (averagePercentage >= 80) {
+            grade = 'B';
+        } else if (averagePercentage >= 70) {
+            grade = 'C';
+        } else if (averagePercentage >= 60) {
+            grade = 'D';
+        } else {
+            grade = 'F';
+        }
+
+        // Display results
+        System.out.println("\nResults:");
+        System.out.println("Total Marks: " + totalMarks);
+        System.out.println("Average Percentage: " + averagePercentage + "%");
+        System.out.println("Grade: " + grade);
+
+        scanner.close();
+    }
+}
